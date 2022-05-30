@@ -1,0 +1,1 @@
+DELETE this file when create first class in package!

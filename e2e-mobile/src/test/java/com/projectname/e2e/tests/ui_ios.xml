@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="ui_ios" configfailurepolicy="continue" thread-count="2" parallel="tests">
+    <!-- project parameters -->
+    <parameter name="project" value="com.projectname.api"/>
+    <parameter name="version" value="1.0.0"/>
+    <parameter name="platform" value="iOS"/>
+
+    <parameter name="com.projectname.e2e.tests.environment" value="Test" />
+    <parameter name="hubUrl" value="http://hub.browserstack.com/wd/hub" />
+
+    <test name="ParallelTestIPhone11Pro">
+        <parameter name="deviceIndex" value="0"/>
+        <groups>
+            <run>
+                <include name="ios"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.projectname.e2e.tests.suite.example.ExampleDashboardTests"/>
+            <class name="com.projectname.e2e.tests.suite.example.ExampleLoginTests"/>
+        </classes>
+    </test>
+
+    <test name="ParallelTestIPhone11ProMax">
+        <parameter name="deviceIndex" value="1"/>
+        <groups>
+            <run>
+                <include name="ios"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.projectname.e2e.tests.suite.example.ExampleDashboardTests"/>
+            <class name="com.projectname.e2e.tests.suite.example.ExampleLoginTests"/>
+        </classes>
+    </test>
+
+</suite>

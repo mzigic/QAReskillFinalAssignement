@@ -1,0 +1,19 @@
+{
+  "capabilities": {
+    "project": "Android Project",
+    "build": "Android test build",
+    "browserstack.debug": true,
+    "app": "YourAndroidApp"
+  },
+
+  "environments": [
+    {
+      "device": "Google Pixel 3",
+      "os_version": "9.0"
+    },
+    {
+      "device": "Samsung Galaxy S10e",
+      "os_version": "9.0"
+    }
+  ]
+}

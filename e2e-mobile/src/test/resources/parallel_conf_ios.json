@@ -1,0 +1,19 @@
+{
+  "capabilities": {
+    "project": "iOS Project",
+    "build": "iOS test build",
+    "browserstack.debug": true,
+    "app": "YourIOSApp"
+  },
+
+  "environments": [
+    {
+      "device": "iPhone 11 Pro",
+      "os_version": "13"
+    },
+    {
+      "device": "iPhone 11 Pro Max",
+      "os_version": "14"
+    }
+  ]
+}

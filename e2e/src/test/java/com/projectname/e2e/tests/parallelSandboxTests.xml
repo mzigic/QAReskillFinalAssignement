@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Sandbox Suite" configfailurepolicy="continue" thread-count="4" parallel="tests">
+    <!-- project parameters -->
+    <parameter name="project" value="Sandbox E2E Tests"/>
+    <parameter name="localRun" value="true"/>
+
+    <test name="Sandbox Login Suite">
+        <parameter name="env_cap_id" value="0"/>
+        <parameter name="platform" value="Chrome"/>
+        <groups>
+            <run>
+                <include name="regression"/>
+                <include name="smoke"/>
+                <include name="knownBugs"/>
+                <include name="security"/>
+                <include name="ui" />
+            </run>
+        </groups>
+        <classes>
+            <class name="com.projectname.e2e.tests.suites.sandbox.LoginTests" />
+        </classes>
+
+    </test>
+    <test name="Sandbox Forgot Password Suite">
+        <parameter name="env_cap_id" value="0"/>
+        <parameter name="platform" value="Chrome"/>
+        <groups>
+            <run>
+                <include name="smoke"/>
+                <include name="ui" />
+            </run>
+        </groups>
+        <classes>
+            <class name="com.projectname.e2e.tests.suites.sandbox.ForgotPasswordTests"/>
+        </classes>
+    </test>
+</suite>
