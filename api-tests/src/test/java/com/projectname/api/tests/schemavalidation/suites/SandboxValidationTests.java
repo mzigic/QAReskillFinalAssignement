@@ -6,7 +6,6 @@ import com.projectname.api.client.constants.GlobalParams;
 import com.projectname.api.client.data.model.sandbox.candidate.CandidateLoginRequest;
 import com.projectname.api.client.data.model.sandbox.candidate.CandidateLoginResponse;
 import com.projectname.api.tests.environment.ConfigSetup;
-import com.projectname.api.tests.init.SandboxTestBase;
 import io.qameta.allure.Description;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
