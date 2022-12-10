@@ -1,6 +1,8 @@
 package com.projectname.api.tests.functional.suites.reqresuser;
 
+import com.projectname.api.client.calls.LoginAPI;
 import com.projectname.api.client.calls.UserAPI;
+import com.projectname.api.client.data.model.login.LoginRequest;
 import com.projectname.api.client.data.model.users.create.CreateUserRequest;
 import com.projectname.api.client.data.model.users.create.CreateUserResponse;
 import com.projectname.api.tests.constants.DataProviderNames;
@@ -13,6 +15,8 @@ import org.testng.annotations.Test;
 import java.time.LocalDateTime;
 
 import static com.projectname.api.client.utils.reporting.Allure.logStep;
+import static com.projectname.api.tests.environment.ConfigSetup.getPassword;
+import static com.projectname.api.tests.environment.ConfigSetup.getUsername;
 
 // each test class should extend TestBase class in order to inherit all common behaviors and to be logged properly in report
 // this sample test class implement api calls from https://reqres.in/ site
@@ -79,5 +83,4 @@ public class FunctionalTests extends TestBase {
         userAssert.assertCreatedUser(actualResponse, expectedResponse);
         logStep("PASS: Response is verified");
     }
-
 }

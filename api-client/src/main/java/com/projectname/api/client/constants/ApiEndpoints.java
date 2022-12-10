@@ -8,4 +8,12 @@ public class ApiEndpoints {
         return USERS + "/" + userId;
     }
 
+    public static final String LOGIN = "/candidate/login";
+    public static final String PROJECTS = "/candidate/projects";
+
+    public static final String projects(Integer id) {
+        return PROJECTS + "/" + id;
+    }
+
+
 }

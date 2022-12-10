@@ -1,8 +1,10 @@
 package com.projectname.api.tests.init;
 
-import com.projectname.api.client.utils.rest.GsonFunctions;
+import com.projectname.api.client.calls.LoginAPI;
+import com.projectname.api.client.data.model.login.LoginRequest;
+import com.projectname.api.client.data.model.login.LoginResponse;
 import com.projectname.api.client.utils.reporting.MethodNGListener;
-import com.projectname.api.tests.environment.ConfigSetup;
+import com.projectname.api.client.utils.rest.GsonFunctions;
 import io.restassured.RestAssured;
 import org.testng.ITest;
 import org.testng.ITestContext;
@@ -11,6 +13,8 @@ import org.testng.annotations.*;
 import org.testng.internal.BaseTestMethod;
 
 import java.lang.reflect.Method;
+
+import static com.projectname.api.tests.environment.ConfigSetup.*;
 
 //Use this class for common functions by using extend inside test classes
 @Listeners({MethodNGListener.class})
@@ -22,9 +26,11 @@ public class TestBase implements ITest {
     //    Use to set base url for test methods; If not set, localhost:8080 is used as default
     @BeforeSuite(groups = {"integration", "regression", "smoke", "knownBugs"})
     public void beforeSuite(ITestContext context) {
-        RestAssured.baseURI = ConfigSetup.getApiBaseURL();
+        RestAssured.baseURI = getBaseUrl();
+        LoginResponse loginResponse = LoginAPI.login(new LoginRequest(getUsername(), getPassword()));
+        token = loginResponse.getToken();
     }
-    
+
     @BeforeClass(groups = {"integration", "regression", "smoke", "knownBugs"})
     public void beforeClass() {
     }
@@ -59,4 +65,6 @@ public class TestBase implements ITest {
     public void revalidate() {
         GsonFunctions.revalidateResponseValidationList();
     }
+
+    protected static String token;
 }
