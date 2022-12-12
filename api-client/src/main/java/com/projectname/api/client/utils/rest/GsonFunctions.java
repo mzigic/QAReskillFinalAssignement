@@ -1,13 +1,6 @@
 package com.projectname.api.client.utils.rest;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.JsonSyntaxException;
+import com.google.gson.*;
 import com.google.gson.annotations.SerializedName;
 import com.projectname.api.client.annotations.ResponseRequiredField;
 import com.projectname.api.client.utils.helpers.Functions;
@@ -21,13 +14,7 @@ import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 // Common methods that use Gson library
 public class GsonFunctions {
@@ -48,7 +35,7 @@ public class GsonFunctions {
     }
 
     //    Verify response of deserialized json object into gson model
-    public static ResponseValidation verifyResponse(Response jsonResponse, Class modeledClass){
+    public static ResponseValidation verifyResponse(Response jsonResponse, Class modeledClass) {
         ResponseValidation responseValidation = new ResponseValidation();
         String json = jsonResponse.body().asString();
         JsonElement jsonElement = new JsonParser().parse(json);
@@ -102,7 +89,7 @@ public class GsonFunctions {
 
         Field field = null;
         try {
-            for (Map.Entry<String,  JsonElement> property : jsonResponse.entrySet()) {
+            for (Map.Entry<String, JsonElement> property : jsonResponse.entrySet()) {
                 if (!classFields.contains(property.getKey())) {
                     unknownFields.add("Model " + modeledClass.getCanonicalName() + " does not contain property " + property.getKey());
                 } else {
@@ -156,7 +143,7 @@ public class GsonFunctions {
     }
 
     //    Verify if required fields exist in Json schema
-    private static List<String> verifyRequiredFieldsValue(Map.Entry<String, JsonElement> property, Class modeledClass, List<String> reqFieldMissingValue){
+    private static List<String> verifyRequiredFieldsValue(Map.Entry<String, JsonElement> property, Class modeledClass, List<String> reqFieldMissingValue) {
         if (reqFieldMissingValue.contains(property.getKey())) {
             if (property.getValue().isJsonNull()) {
                 requiredFieldMissingValue.add("Required field " + modeledClass.getCanonicalName() + "::" + property.getKey() + " is null");
@@ -175,8 +162,7 @@ public class GsonFunctions {
             for (JsonElement jsonElement : jsonArray) {
                 if (jsonElement.isJsonObject()) {
                     verifyResponse(jsonElement.getAsJsonObject(), modeledClass);
-                }
-                else {
+                } else {
                     Map.Entry<String, JsonElement> childProperty = new MapEntry(property.getKey(), jsonElement);
                     verifyType(childProperty, modeledClass, rootClass);
                 }
@@ -215,7 +201,7 @@ public class GsonFunctions {
                 wrongTypeFields.add(rootClass.getCanonicalName() + "::" + property.getKey() + "[value " + property.getValue() + " is not of expected type " + fieldTypeClass + "]");
             }
         }
-        return  wrongTypeFields;
+        return wrongTypeFields;
     }
 
     public static <T> T parseSuccessResponseToModel(Response jsonResponse, Class<T> classOfT) {
@@ -228,7 +214,7 @@ public class GsonFunctions {
             } else {
                 return new Gson().fromJson(prettyJsonString, (Type) classOfT);
             }
-        } catch (JsonSyntaxException|IllegalStateException e) {
+        } catch (JsonSyntaxException | IllegalStateException e) {
             Assert.fail("Endpoint for processing " + classOfT + "\n return error: " + prettyJsonString
                     + "\n serialization exception error: " + e.getMessage());
         }
@@ -245,7 +231,7 @@ public class GsonFunctions {
             } else {
                 return Arrays.asList(new Gson().fromJson(prettyJsonString, (Type) classOfT));
             }
-        } catch (JsonSyntaxException|IllegalStateException e) {
+        } catch (JsonSyntaxException | IllegalStateException e) {
             Assert.fail("Endpoint for processing " + classOfT + "\n return error: " + prettyJsonString +
                     "\n serialization exception error: " + e.getMessage());
         }
@@ -270,7 +256,7 @@ public class GsonFunctions {
         return null;
     }
 
-    public static <T> T parseErrorResponseToModel(Response jsonResponse, Class<T> classOfT){
+    public static <T> T parseErrorResponseToModel(Response jsonResponse, Class<T> classOfT) {
         String json = jsonResponse.body().asString();
         String prettyJsonString = "";
         try {
