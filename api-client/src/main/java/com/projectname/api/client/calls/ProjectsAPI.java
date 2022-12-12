@@ -1,7 +1,7 @@
 package com.projectname.api.client.calls;
 
 import com.projectname.api.client.constants.SandboxApiEndpoints;
-import com.projectname.api.client.data.model.projects.create.CreateProjectErrorResponse;
+import com.projectname.api.client.data.model.projects.ProjectRequiredFieldErrorResponse;
 import com.projectname.api.client.data.model.projects.create.CreateProjectRequest;
 import com.projectname.api.client.data.model.projects.create.CreateProjectResponse;
 import com.projectname.api.client.data.model.projects.list.ListProjectsResponse;
@@ -27,7 +27,12 @@ public class ProjectsAPI {
         RestAssuredTokenAuthFunctions.delete(token, SandboxApiEndpoints.projects(id));
     }
 
-    public static CreateProjectErrorResponse createProjectTitleError(String token, CreateProjectRequest createProject) {
-        return GsonFunctions.parseErrorResponseToModel(RestAssuredTokenAuthFunctions.post(createProject, token,  SandboxApiEndpoints.CANDIDATE_PROJECTS), CreateProjectErrorResponse.class);
+
+    public static ProjectRequiredFieldErrorResponse createProjectTitleError(String token, CreateProjectRequest createProject) {
+        return GsonFunctions.parseErrorResponseToModel(RestAssuredTokenAuthFunctions.post(createProject, token, SandboxApiEndpoints.CANDIDATE_PROJECTS), ProjectRequiredFieldErrorResponse.class);
+    }
+
+    public static ProjectRequiredFieldErrorResponse updateProjectTitleError(String token, UpdateProjectRequest updateProject, Integer id) {
+        return GsonFunctions.parseErrorResponseToModel(RestAssuredTokenAuthFunctions.put(updateProject, token, SandboxApiEndpoints.projects(id)), ProjectRequiredFieldErrorResponse.class);
     }
 }

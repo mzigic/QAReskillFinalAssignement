@@ -1,6 +1,6 @@
 package com.projectname.api.tests.functional.asserts;
 
-import com.projectname.api.client.data.model.projects.create.CreateProjectErrorResponse;
+import com.projectname.api.client.data.model.projects.ProjectRequiredFieldErrorResponse;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
@@ -11,7 +11,7 @@ public class CommonErrorAssert {
         this.softAssert = new SoftAssert();
     }
 
-    public void assertProjectTitleError(CreateProjectErrorResponse actualError, CreateProjectErrorResponse expectedError) {
+    public void assertProjectTitleError(ProjectRequiredFieldErrorResponse actualError, ProjectRequiredFieldErrorResponse expectedError) {
         if (actualError == null) {
             Assert.fail("Actual error is null!");
         }

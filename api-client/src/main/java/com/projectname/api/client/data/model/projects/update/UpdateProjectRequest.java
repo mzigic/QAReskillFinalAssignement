@@ -29,6 +29,11 @@ public class UpdateProjectRequest implements Serializable {
         this.projectId = projectId;
     }
 
+    public UpdateProjectRequest(String title) {
+        super();
+        this.title = title;
+    }
+
     public String getTitle() {
         return title;
     }
