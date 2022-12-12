@@ -11,7 +11,7 @@ public class CommonErrorAssert {
         this.softAssert = new SoftAssert();
     }
 
-    public void assertRequiredFieldError(CreateProjectErrorResponse actualError, CreateProjectErrorResponse expectedError) {
+    public void assertProjectTitleError(CreateProjectErrorResponse actualError, CreateProjectErrorResponse expectedError) {
         if (actualError == null) {
             Assert.fail("Actual error is null!");
         }

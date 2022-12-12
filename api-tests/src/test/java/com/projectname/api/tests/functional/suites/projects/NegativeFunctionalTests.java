@@ -3,7 +3,9 @@ package com.projectname.api.tests.functional.suites.projects;
 import com.projectname.api.client.calls.ProjectsAPI;
 import com.projectname.api.client.data.model.projects.create.CreateProjectErrorResponse;
 import com.projectname.api.client.data.model.projects.create.CreateProjectRequest;
+import com.projectname.api.client.data.model.projects.create.CreateProjectResponse;
 import com.projectname.api.tests.constants.DataProviderNames;
+import com.projectname.api.tests.constants.ErrorMessages;
 import com.projectname.api.tests.data.provider.ProjectProvider;
 import com.projectname.api.tests.functional.asserts.CommonErrorAssert;
 import com.projectname.api.tests.init.TestBase;
@@ -15,8 +17,22 @@ public class NegativeFunctionalTests extends TestBase {
     public void verifyCannotCreateProjectWithoutRequiredField(
             String suffix, CreateProjectRequest projectRequest, CreateProjectErrorResponse expectedError) {
         CreateProjectErrorResponse actualError = ProjectsAPI.
-                createProjectError(token, projectRequest);
+                createProjectTitleError(token, projectRequest);
         CommonErrorAssert commonErrorAssert = new CommonErrorAssert();
-        commonErrorAssert.assertRequiredFieldError(actualError, expectedError);
+        commonErrorAssert.assertProjectTitleError(actualError, expectedError);
+    }
+
+    @Test
+    public void verifyCannotCreateProjectWithSameTitle() {
+        CreateProjectRequest createProjectRequest = new CreateProjectRequest("title1");
+        CreateProjectResponse createdProject = ProjectsAPI.createProject(token, createProjectRequest);
+        CreateProjectErrorResponse actualError = ProjectsAPI.
+                createProjectTitleError(token, createProjectRequest);
+
+        CommonErrorAssert commonErrorAssert = new CommonErrorAssert();
+        CreateProjectErrorResponse expectedError = new CreateProjectErrorResponse(ErrorMessages.PROJECT_TITLE_ALREADY_EXISTS);
+        commonErrorAssert.assertProjectTitleError(actualError, expectedError);
+
+        ProjectsAPI.deleteProject(token, createdProject.getId());
     }
 }

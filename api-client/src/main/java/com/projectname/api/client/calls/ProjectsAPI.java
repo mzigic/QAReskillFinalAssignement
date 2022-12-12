@@ -27,7 +27,7 @@ public class ProjectsAPI {
         RestAssuredTokenAuthFunctions.delete(token, SandboxApiEndpoints.projects(id));
     }
 
-    public static CreateProjectErrorResponse createProjectError(String token, CreateProjectRequest createProject) {
-        return GsonFunctions.parseErrorResponseToModel(RestAssuredTokenAuthFunctions.post(createProject, token, SandboxApiEndpoints.CANDIDATE_PROJECTS), CreateProjectErrorResponse.class);
+    public static CreateProjectErrorResponse createProjectTitleError(String token, CreateProjectRequest createProject) {
+        return GsonFunctions.parseErrorResponseToModel(RestAssuredTokenAuthFunctions.post(createProject, token,  SandboxApiEndpoints.CANDIDATE_PROJECTS), CreateProjectErrorResponse.class);
     }
 }
