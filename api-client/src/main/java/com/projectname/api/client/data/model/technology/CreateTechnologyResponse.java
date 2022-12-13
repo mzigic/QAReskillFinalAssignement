@@ -1,10 +1,10 @@
-package com.projectname.api.client.data.model.seniority;
+package com.projectname.api.client.data.model.technology;
 
 import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Seniority implements Serializable
+public class CreateTechnologyResponse implements Serializable
 {
 
     @SerializedName("id")
@@ -19,12 +19,12 @@ public class Seniority implements Serializable
     @SerializedName("candidate_scenario_id")
     @Expose
     private Integer candidateScenarioId;
-    private final static long serialVersionUID = -3827250359132248552L;
+    private final static long serialVersionUID = 6534800126487123186L;
 
-    public Seniority() {
+    public CreateTechnologyResponse() {
     }
 
-    public Seniority(Integer id, String title, Integer candidateId, Integer candidateScenarioId) {
+    public CreateTechnologyResponse(Integer id, String title, Integer candidateId, Integer candidateScenarioId) {
         super();
         this.id = id;
         this.title = title;

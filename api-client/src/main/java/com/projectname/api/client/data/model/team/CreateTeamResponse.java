@@ -7,7 +7,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.projectname.api.client.data.model.people.Person;
 
-public class Team implements Serializable
+public class CreateTeamResponse implements Serializable
 {
 
     @SerializedName("id")
@@ -36,10 +36,10 @@ public class Team implements Serializable
     private Integer candidateScenarioId;
     private final static long serialVersionUID = 7815268977555674995L;
 
-    public Team() {
+    public CreateTeamResponse() {
     }
 
-    public Team(Integer id, String title, Integer candidateId, Integer candidateScenarioId) {
+    public CreateTeamResponse(Integer id, String title, Integer candidateId, Integer candidateScenarioId) {
         super();
         this.id = id;
         this.title = title;

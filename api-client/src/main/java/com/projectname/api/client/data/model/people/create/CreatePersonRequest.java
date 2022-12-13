@@ -2,9 +2,9 @@ package com.projectname.api.client.data.model.people.create;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.projectname.api.client.data.model.seniority.Seniority;
-import com.projectname.api.client.data.model.team.Team;
-import com.projectname.api.client.data.model.technology.Technology;
+import com.projectname.api.client.data.model.seniority.CreateSeniorityResponse;
+import com.projectname.api.client.data.model.team.CreateTeamResponse;
+import com.projectname.api.client.data.model.technology.CreateTechnologyResponse;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -17,19 +17,19 @@ public class CreatePersonRequest implements Serializable {
     private String name;
     @SerializedName("technologies")
     @Expose
-    private List<Technology> technologies = new ArrayList<>();
+    private List<CreateTechnologyResponse> technologies = new ArrayList<>();
     @SerializedName("seniority")
     @Expose
-    private List<Seniority> seniority = new ArrayList<>();
+    private List<CreateSeniorityResponse> seniority = new ArrayList<>();
     @SerializedName("team")
     @Expose
-    private List<Team> team = new ArrayList<>();
+    private List<CreateTeamResponse> team = new ArrayList<>();
     private final static long serialVersionUID = 6193505836131998481L;
 
     public CreatePersonRequest() {
     }
 
-    public CreatePersonRequest(String name, List<Technology> technologies, List<Seniority> seniority, List<Team> team) {
+    public CreatePersonRequest(String name, List<CreateTechnologyResponse> technologies, List<CreateSeniorityResponse> seniority, List<CreateTeamResponse> team) {
         super();
         this.name = name;
         this.technologies = technologies;
@@ -45,27 +45,27 @@ public class CreatePersonRequest implements Serializable {
         this.name = name;
     }
 
-    public List<Technology> getTechnologies() {
+    public List<CreateTechnologyResponse> getTechnologies() {
         return technologies;
     }
 
-    public void setTechnologies(List<Technology> technologies) {
+    public void setTechnologies(List<CreateTechnologyResponse> technologies) {
         this.technologies = technologies;
     }
 
-    public List<Seniority> getSeniority() {
+    public List<CreateSeniorityResponse> getSeniority() {
         return seniority;
     }
 
-    public void setSeniority(List<Seniority> seniority) {
+    public void setSeniority(List<CreateSeniorityResponse> seniority) {
         this.seniority = seniority;
     }
 
-    public List<Team> getTeam() {
+    public List<CreateTeamResponse> getTeam() {
         return team;
     }
 
-    public void setTeam(List<Team> team) {
+    public void setTeam(List<CreateTeamResponse> team) {
         this.team = team;
     }
 }

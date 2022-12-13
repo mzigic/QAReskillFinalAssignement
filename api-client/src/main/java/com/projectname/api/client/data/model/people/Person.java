@@ -2,8 +2,8 @@ package com.projectname.api.client.data.model.people;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.projectname.api.client.data.model.seniority.Seniority;
-import com.projectname.api.client.data.model.technology.Technology;
+import com.projectname.api.client.data.model.seniority.CreateSeniorityResponse;
+import com.projectname.api.client.data.model.technology.CreateTechnologyResponse;
 
 import java.io.Serializable;
 import java.util.List;
@@ -31,16 +31,16 @@ public class Person implements Serializable {
 
     @SerializedName("technologies")
     @Expose
-    private List<Technology> technologies = null;
+    private List<CreateTechnologyResponse> technologies = null;
     @SerializedName("seniority")
     @Expose
-    private Seniority seniority;
+    private CreateSeniorityResponse seniority;
     private final static long serialVersionUID = -2511334441852931804L;
 
     public Person() {
     }
 
-    public Person(Integer id, String name, Integer candidateId, Integer seniorityId, Integer teamId, Integer candidateScenarioId, List<Technology> technologies, Seniority seniority) {
+    public Person(Integer id, String name, Integer candidateId, Integer seniorityId, Integer teamId, Integer candidateScenarioId, List<CreateTechnologyResponse> technologies, CreateSeniorityResponse seniority) {
         super();
         this.id = id;
         this.name = name;
@@ -100,19 +100,19 @@ public class Person implements Serializable {
         this.candidateScenarioId = candidateScenarioId;
     }
 
-    public List<Technology> getTechnologies() {
+    public List<CreateTechnologyResponse> getTechnologies() {
         return technologies;
     }
 
-    public void setTechnologies(List<Technology> technologies) {
+    public void setTechnologies(List<CreateTechnologyResponse> technologies) {
         this.technologies = technologies;
     }
 
-    public Seniority getSeniority() {
+    public CreateSeniorityResponse getSeniority() {
         return seniority;
     }
 
-    public void setSeniority(Seniority seniority) {
+    public void setSeniority(CreateSeniorityResponse seniority) {
         this.seniority = seniority;
     }
 

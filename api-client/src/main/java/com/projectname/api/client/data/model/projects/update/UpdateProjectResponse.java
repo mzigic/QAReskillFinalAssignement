@@ -2,7 +2,7 @@ package com.projectname.api.client.data.model.projects.update;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.projectname.api.client.data.model.team.Team;
+import com.projectname.api.client.data.model.team.CreateTeamResponse;
 
 import java.io.Serializable;
 import java.util.List;
@@ -26,7 +26,7 @@ public class UpdateProjectResponse implements Serializable {
     private Integer candidateScenarioId;
     @SerializedName("teams")
     @Expose
-    private List<Team> teams = null;
+    private List<CreateTeamResponse> teams = null;
     @SerializedName("people_count")
     @Expose
     private Integer peopleCount;
@@ -41,7 +41,7 @@ public class UpdateProjectResponse implements Serializable {
     public UpdateProjectResponse() {
     }
 
-    public UpdateProjectResponse(Integer id, String title, Integer candidateId, Object image, Integer candidateScenarioId, List<Team> teams, Integer peopleCount, Integer seniorityCount, Integer technologyCount) {
+    public UpdateProjectResponse(Integer id, String title, Integer candidateId, Object image, Integer candidateScenarioId, List<CreateTeamResponse> teams, Integer peopleCount, Integer seniorityCount, Integer technologyCount) {
         super();
         this.id = id;
         this.title = title;
@@ -94,11 +94,11 @@ public class UpdateProjectResponse implements Serializable {
         this.candidateScenarioId = candidateScenarioId;
     }
 
-    public List<Team> getTeams() {
+    public List<CreateTeamResponse> getTeams() {
         return teams;
     }
 
-    public void setTeams(List<Team> teams) {
+    public void setTeams(List<CreateTeamResponse> teams) {
         this.teams = teams;
     }
 
