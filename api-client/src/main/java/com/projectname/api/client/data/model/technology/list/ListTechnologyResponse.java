@@ -1,10 +1,10 @@
-package com.projectname.api.client.data.model.technology;
+package com.projectname.api.client.data.model.technology.list;
 
 import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class CreateTechnologyResponse implements Serializable
+public class ListTechnologyResponse implements Serializable
 {
 
     @SerializedName("id")
@@ -19,12 +19,12 @@ public class CreateTechnologyResponse implements Serializable
     @SerializedName("candidate_scenario_id")
     @Expose
     private Integer candidateScenarioId;
-    private final static long serialVersionUID = 6534800126487123186L;
+    private final static long serialVersionUID = -4194568572578316101L;
 
-    public CreateTechnologyResponse() {
+    public ListTechnologyResponse() {
     }
 
-    public CreateTechnologyResponse(Integer id, String title, Integer candidateId, Integer candidateScenarioId) {
+    public ListTechnologyResponse(Integer id, String title, Integer candidateId, Integer candidateScenarioId) {
         super();
         this.id = id;
         this.title = title;

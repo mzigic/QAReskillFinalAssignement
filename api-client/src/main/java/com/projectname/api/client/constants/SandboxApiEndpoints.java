@@ -12,6 +12,7 @@ public class SandboxApiEndpoints {
     public static final String CANDIDATE_REPORTS = CANDIDATE + "reports/";
     public static final String CANDIDATE_SCENARIO = CANDIDATE + "scenario/";
     public static final String CANDIDATE_PEOPLE = CANDIDATE + "people/";
+    public static final String CANDIDATE_TECHNOLOGIES = CANDIDATE + "technologies/";
 
     public static final String projects(Integer id) {
         return CANDIDATE_PROJECTS + id;
@@ -20,6 +21,7 @@ public class SandboxApiEndpoints {
     public static final String people(Integer id) {
         return CANDIDATE_PEOPLE + id;
     }
+    public static final String technologies(Integer id) {return CANDIDATE_TECHNOLOGIES + id;}
 
     public static String testCaseBy(String id) {
         return CANDIDATE_TESTCASES + id;

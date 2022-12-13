@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.projectname.api.client.data.model.seniority.CreateSeniorityResponse;
 import com.projectname.api.client.data.model.team.CreateTeamResponse;
-import com.projectname.api.client.data.model.technology.CreateTechnologyResponse;
+import com.projectname.api.client.data.model.technology.create.CreateTechnologyResponse;
 
 import java.io.Serializable;
 import java.util.ArrayList;

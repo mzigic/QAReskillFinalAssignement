@@ -1,4 +1,4 @@
-package com.projectname.api.client.data.model.technology;
+package com.projectname.api.client.data.model.technology.create;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
