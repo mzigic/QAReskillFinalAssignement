@@ -2,6 +2,7 @@ package com.projectname.api.tests.functional.asserts;
 
 import com.projectname.api.client.data.model.technology.create.CreateTechnologyResponse;
 import com.projectname.api.client.data.model.technology.list.ListTechnologyResponse;
+import com.projectname.api.client.data.model.technology.update.UpdateTechnologyResponse;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
@@ -33,5 +34,13 @@ public class TechnologyAssert {
         if (!technologyFound) {
             Assert.fail("Technology not created!");
         }
+    }
+
+    public void assertUpdatedTechnologyTitle(UpdateTechnologyResponse actualResponse, UpdateTechnologyResponse expectedResponse) {
+        if (actualResponse == null) {
+            Assert.fail("Technology was not created");
+        }
+        softAssert.assertEquals(actualResponse.getTitle(), expectedResponse.getTitle(), "Title didn't match");
+        this.softAssert.assertAll();
     }
 }

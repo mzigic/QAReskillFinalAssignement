@@ -14,6 +14,8 @@ import com.projectname.api.client.data.model.projects.update.UpdateProjectRespon
 import com.projectname.api.client.data.model.technology.create.CreateTechnologyRequest;
 import com.projectname.api.client.data.model.technology.create.CreateTechnologyResponse;
 import com.projectname.api.client.data.model.technology.list.ListTechnologyResponse;
+import com.projectname.api.client.data.model.technology.update.UpdateTechnologyRequest;
+import com.projectname.api.client.data.model.technology.update.UpdateTechnologyResponse;
 import com.projectname.api.tests.constants.DataProviderNames;
 import com.projectname.api.tests.data.provider.ProjectProvider;
 import com.projectname.api.tests.data.provider.TechnologyProvider;
@@ -98,6 +100,40 @@ public class PositiveFunctionalTests extends TestBase {
 
         ListTechnologyResponse[] technologies = TechnologyAPI.getTechnologies(token);
         technologyAssert.assertTechnologyInList(technologies, createdTechnologyActual.getId());
+
+        TechnologyAPI.deleteTechnology(token, createdTechnologyActual.getId());
+    }
+
+    @Test
+    @Description("Verify can update technology")
+    public static void verifyCanUpdateTechnology() {
+        CreateTechnologyRequest createTechnologyRequest = new CreateTechnologyRequest("Technology1");
+
+        CreateTechnologyResponse[] createTechnologyResponse = TechnologyAPI.createTechnology(token, createTechnologyRequest);
+        CreateTechnologyResponse createdTechnologyActual = null;
+        for (CreateTechnologyResponse technologyResponse : createTechnologyResponse) {
+            if (technologyResponse.getTitle().equals(createTechnologyRequest.getTitle())) {
+                createdTechnologyActual = technologyResponse;
+                break;
+            }
+        }
+
+        UpdateTechnologyRequest updateTechnologyRequest = new UpdateTechnologyRequest("Updated technology title");
+
+        UpdateTechnologyResponse[] updatedTechnologyList = TechnologyAPI.updateTechnology(token, updateTechnologyRequest, createdTechnologyActual.getId());
+        UpdateTechnologyResponse updatedTechnologyActual = null;
+        for (UpdateTechnologyResponse technologyResponse : updatedTechnologyList) {
+            if (technologyResponse.getTitle().equals(updateTechnologyRequest.getTitle())) {
+                updatedTechnologyActual = technologyResponse;
+                break;
+            }
+        }
+
+        UpdateTechnologyResponse updatedTechnologyExpected = UpdateTechnologyResponse.parseUpdatedTechnology(updateTechnologyRequest);
+
+        TechnologyAssert technologyAssert = new TechnologyAssert();
+
+        technologyAssert.assertUpdatedTechnologyTitle(updatedTechnologyActual, updatedTechnologyExpected);
 
         TechnologyAPI.deleteTechnology(token, createdTechnologyActual.getId());
     }
