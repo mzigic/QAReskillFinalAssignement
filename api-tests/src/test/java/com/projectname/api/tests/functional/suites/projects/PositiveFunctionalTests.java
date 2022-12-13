@@ -1,8 +1,6 @@
 package com.projectname.api.tests.functional.suites.projects;
 
-import com.projectname.api.client.calls.PeopleAPI;
-import com.projectname.api.client.calls.ProjectsAPI;
-import com.projectname.api.client.calls.TechnologyAPI;
+import com.projectname.api.client.calls.*;
 import com.projectname.api.client.data.model.people.create.CreatePersonRequest;
 import com.projectname.api.client.data.model.people.create.CreatePersonResponse;
 import com.projectname.api.client.data.model.projects.create.CreateProjectRequest;
@@ -11,6 +9,10 @@ import com.projectname.api.client.data.model.projects.list.ListProjectsResponse;
 import com.projectname.api.client.data.model.projects.update.AssignPersonRequest;
 import com.projectname.api.client.data.model.projects.update.UpdateProjectRequest;
 import com.projectname.api.client.data.model.projects.update.UpdateProjectResponse;
+import com.projectname.api.client.data.model.seniority.CreateSeniorityRequest;
+import com.projectname.api.client.data.model.seniority.CreateSeniorityResponse;
+import com.projectname.api.client.data.model.team.CreateTeamRequest;
+import com.projectname.api.client.data.model.team.CreateTeamResponse;
 import com.projectname.api.client.data.model.technology.create.CreateTechnologyRequest;
 import com.projectname.api.client.data.model.technology.create.CreateTechnologyResponse;
 import com.projectname.api.client.data.model.technology.list.ListTechnologyResponse;
@@ -19,6 +21,7 @@ import com.projectname.api.client.data.model.technology.update.UpdateTechnologyR
 import com.projectname.api.tests.constants.DataProviderNames;
 import com.projectname.api.tests.data.provider.ProjectProvider;
 import com.projectname.api.tests.data.provider.TechnologyProvider;
+import com.projectname.api.tests.functional.asserts.PersonAssert;
 import com.projectname.api.tests.functional.asserts.ProjectAssert;
 import com.projectname.api.tests.functional.asserts.TechnologyAssert;
 import com.projectname.api.tests.init.TestBase;
@@ -136,5 +139,56 @@ public class PositiveFunctionalTests extends TestBase {
         technologyAssert.assertUpdatedTechnologyTitle(updatedTechnologyActual, updatedTechnologyExpected);
 
         TechnologyAPI.deleteTechnology(token, createdTechnologyActual.getId());
+    }
+
+    @Test
+    @Description("Verify can create person")
+    public static void verifyCanCreatePerson() {
+        //creating technology
+        CreateTechnologyRequest createTechnologyRequest = new CreateTechnologyRequest("Technology1");
+
+        CreateTechnologyResponse[] createTechnologyResponse = TechnologyAPI.createTechnology(token, createTechnologyRequest);
+        //creating seniority
+        CreateSeniorityRequest createSeniorityRequest = new CreateSeniorityRequest("Seniority1");
+
+        CreateSeniorityResponse[] createSeniorityResponse = SeniorityAPI.createSeniority(token, createSeniorityRequest);
+        CreateSeniorityResponse createdSeniorityActual = null;
+        for (CreateSeniorityResponse seniorityResponse : createSeniorityResponse) {
+            if (seniorityResponse.getTitle().equals(createSeniorityRequest.getTitle())) {
+                createdSeniorityActual = seniorityResponse;
+                break;
+            }
+        }
+        //creating team
+        CreateTeamRequest createTeamRequest = new CreateTeamRequest("Team1");
+
+        CreateTeamResponse[] createTeamResponse = TeamAPI.createTeam(token, createTeamRequest);
+        CreateTeamResponse createdTeamActual = null;
+        for (CreateTeamResponse teamResponse : createTeamResponse) {
+            if (teamResponse.getTitle().equals(createTeamRequest.getTitle())) {
+                createdTeamActual = teamResponse;
+                break;
+            }
+        }
+        //creating person
+        CreatePersonRequest createPersonRequest = new CreatePersonRequest("Person1", createTechnologyResponse, createdSeniorityActual, createdTeamActual);
+        CreatePersonResponse[] createPersonResponse = PeopleAPI.createPerson(token, createPersonRequest);
+        CreatePersonResponse createdPersonActual = null;
+        for (CreatePersonResponse personResponse : createPersonResponse) {
+            if (personResponse.getName().equals(createPersonRequest.getName())) {
+                createdPersonActual = personResponse;
+                break;
+            }
+        }
+        CreatePersonResponse createdPersonExpected = CreatePersonResponse.parseCreatedPerson(createPersonRequest);
+
+        PersonAssert personAssert = new PersonAssert();
+        personAssert.assertCreatedPerson(createdPersonActual, createdPersonExpected);
+
+        TechnologyAPI.deleteTechnology(token, createTechnologyResponse[0].getId());
+        SeniorityAPI.deleteTSeniority(token, createdSeniorityActual.getId());
+
+        PeopleAPI.deletePerson(token, createdPersonActual.getId());
+        TeamAPI.deleteTeam(token, createdTeamActual.getId());
     }
 }

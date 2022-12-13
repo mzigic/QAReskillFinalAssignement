@@ -1,8 +1,6 @@
 package com.projectname.api.client.calls;
 
 import com.projectname.api.client.constants.SandboxApiEndpoints;
-import com.projectname.api.client.data.model.projects.update.UpdateProjectRequest;
-import com.projectname.api.client.data.model.projects.update.UpdateProjectResponse;
 import com.projectname.api.client.data.model.technology.create.CreateTechnologyRequest;
 import com.projectname.api.client.data.model.technology.create.CreateTechnologyResponse;
 import com.projectname.api.client.data.model.technology.list.ListTechnologyResponse;

@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.projectname.api.client.data.model.projects.create.CreateProjectRequest;
+import com.projectname.api.client.data.model.projects.create.CreateProjectResponse;
 import com.projectname.api.client.data.model.seniority.CreateSeniorityResponse;
 import com.projectname.api.client.data.model.team.CreateTeamResponse;
 import com.projectname.api.client.data.model.technology.create.CreateTechnologyResponse;
@@ -38,13 +40,13 @@ public class CreatePersonResponse implements Serializable
     private CreateTeamResponse team;
     @SerializedName("technologies")
     @Expose
-    private List<CreateTechnologyResponse> technologies = null;
+    private CreateTechnologyResponse[] technologies = null;
     private final static long serialVersionUID = -4625511916604852520L;
 
     public CreatePersonResponse() {
     }
 
-    public CreatePersonResponse(Integer id, String name, Integer candidateId, Integer seniorityId, Integer teamId, Integer candidateScenarioId, CreateSeniorityResponse seniority, CreateTeamResponse team, List<CreateTechnologyResponse> technologies) {
+    public CreatePersonResponse(Integer id, String name, Integer candidateId, Integer seniorityId, Integer teamId, Integer candidateScenarioId, CreateSeniorityResponse seniority, CreateTeamResponse team, CreateTechnologyResponse[] technologies) {
         super();
         this.id = id;
         this.name = name;
@@ -121,12 +123,20 @@ public class CreatePersonResponse implements Serializable
         this.team = team;
     }
 
-    public List<CreateTechnologyResponse> getTechnologies() {
+    public CreateTechnologyResponse[] getTechnologies() {
         return technologies;
     }
 
-    public void setTechnologies(List<CreateTechnologyResponse> technologies) {
+    public void setTechnologies(CreateTechnologyResponse[] technologies) {
         this.technologies = technologies;
     }
 
+    public static CreatePersonResponse parseCreatedPerson(CreatePersonRequest createPersonRequest) {
+        CreatePersonResponse createPersonResponse = new CreatePersonResponse();
+        createPersonResponse.setName(createPersonRequest.getName());
+        createPersonResponse.setTechnologies(createPersonRequest.getTechnologies());
+        createPersonResponse.setSeniority(createPersonRequest.getSeniority());
+        createPersonResponse.setTeam(createPersonRequest.getTeam());
+        return createPersonResponse;
+    }
 }

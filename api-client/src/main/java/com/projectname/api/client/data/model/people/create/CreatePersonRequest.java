@@ -17,24 +17,28 @@ public class CreatePersonRequest implements Serializable {
     private String name;
     @SerializedName("technologies")
     @Expose
-    private List<CreateTechnologyResponse> technologies = new ArrayList<>();
+    private CreateTechnologyResponse[] technologies;
     @SerializedName("seniority")
     @Expose
-    private List<CreateSeniorityResponse> seniority = new ArrayList<>();
+    private CreateSeniorityResponse seniority;
     @SerializedName("team")
     @Expose
-    private List<CreateTeamResponse> team = new ArrayList<>();
+    private CreateTeamResponse team;
     private final static long serialVersionUID = 6193505836131998481L;
 
     public CreatePersonRequest() {
     }
 
-    public CreatePersonRequest(String name, List<CreateTechnologyResponse> technologies, List<CreateSeniorityResponse> seniority, List<CreateTeamResponse> team) {
+    public CreatePersonRequest(String name, CreateTechnologyResponse[] technologies, CreateSeniorityResponse seniority, CreateTeamResponse team) {
         super();
         this.name = name;
         this.technologies = technologies;
         this.seniority = seniority;
         this.team = team;
+    }
+    public CreatePersonRequest(String name) {
+        super();
+        this.name = name;
     }
 
     public String getName() {
@@ -45,27 +49,27 @@ public class CreatePersonRequest implements Serializable {
         this.name = name;
     }
 
-    public List<CreateTechnologyResponse> getTechnologies() {
+    public CreateTechnologyResponse[] getTechnologies() {
         return technologies;
     }
 
-    public void setTechnologies(List<CreateTechnologyResponse> technologies) {
+    public void setTechnologies(CreateTechnologyResponse[] technologies) {
         this.technologies = technologies;
     }
 
-    public List<CreateSeniorityResponse> getSeniority() {
+    public CreateSeniorityResponse getSeniority() {
         return seniority;
     }
 
-    public void setSeniority(List<CreateSeniorityResponse> seniority) {
+    public void setSeniority(CreateSeniorityResponse seniority) {
         this.seniority = seniority;
     }
 
-    public List<CreateTeamResponse> getTeam() {
+    public CreateTeamResponse getTeam() {
         return team;
     }
 
-    public void setTeam(List<CreateTeamResponse> team) {
+    public void setTeam(CreateTeamResponse team) {
         this.team = team;
     }
 }
