@@ -2,7 +2,6 @@ package com.projectname.e2e.tests.pages.common;
 
 import com.projectname.e2e.tests.data.enums.Module;
 import com.projectname.e2e.tests.pages.DashboardPage;
-import com.projectname.e2e.tests.pages.sandbox.NavigationBarSubPage;
 import com.projectname.e2e.tests.webdriver.CustomWebDriver;
 
 import static com.projectname.api.client.utils.reporting.Allure.logStep;

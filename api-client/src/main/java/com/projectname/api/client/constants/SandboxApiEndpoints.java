@@ -11,7 +11,18 @@ public class SandboxApiEndpoints {
     public static final String CANDIDATE_PROJECTS = CANDIDATE + "projects/";
     public static final String CANDIDATE_REPORTS = CANDIDATE + "reports/";
     public static final String CANDIDATE_SCENARIO = CANDIDATE + "scenario/";
+    public static final String CANDIDATE_PEOPLE = CANDIDATE + "people";
+    public static final String USERS = "api/users";
 
+    public static final String users(String userId) {
+        return USERS + "/" + userId;
+    }
+    public static final String projects(Integer id) {
+        return CANDIDATE_PROJECTS + "/" + id;
+    }
+    public static final String people(Integer id) {
+        return CANDIDATE_PEOPLE + "/" + id;
+    }
     public static String testCaseBy(String id){
         return CANDIDATE_TESTCASES + id;
     }
