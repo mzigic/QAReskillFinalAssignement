@@ -29,5 +29,16 @@ public class ProjectsAssert {
         this.softAssert.assertAll();
     }
 
+    public void assertProjectPreviewDetails(ProjectDetails projectDetails, String title, String team, String person, String seniority, String technology) {
+        if (projectDetails == null) {
+            Assert.fail("Actual details are null");
+        }
+
+        this.softAssert.assertEquals(projectDetails.getTitle(), title, "Title didn't match");
+        this.softAssert.assertEquals(projectDetails.getTeam(), team, "Team didn't match");
+        this.softAssert.assertEquals(projectDetails.getSeniority(), seniority, "Seniority didn't match");
+        this.softAssert.assertEquals(projectDetails.getTechnology(), technology, "Technology didn't match");
+        this.softAssert.assertAll();
+    }
 
 }

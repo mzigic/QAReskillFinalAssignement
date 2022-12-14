@@ -7,7 +7,6 @@ import com.projectname.e2e.tests.selectors.CustomBy;
 import com.projectname.e2e.tests.utils.CheckIfElement;
 import com.projectname.e2e.tests.webdriver.CustomWebDriver;
 import org.openqa.selenium.WebElement;
-import org.testng.asserts.Assertion;
 
 public class ProjectsPage extends PageBase {
     public ProjectsPage(CustomWebDriver driver, String url, String email, String password) {
@@ -80,6 +79,7 @@ public class ProjectsPage extends PageBase {
             throw new AssertionError("Could not find team in project preview");
         }
     }
+
     private WebElement getPersonInProjectPreview() {
         try {
             return driver.findElement(CustomBy.xpath("//*[@id=\"myModal-0\"]/div/div/div[2]/div[2]/div/div[2]/div/div[1]"));
@@ -88,6 +88,7 @@ public class ProjectsPage extends PageBase {
             throw new AssertionError("Could not find person in project preview");
         }
     }
+
     private WebElement getSeniorityProjectPreview() {
         try {
             return driver.findElement(CustomBy.xpath("//*[@id=\"myModal-0\"]/div/div/div[2]/div[2]/div/div[2]/div/div[2]"));
@@ -96,9 +97,10 @@ public class ProjectsPage extends PageBase {
             throw new AssertionError("Could not find seniority in project preview");
         }
     }
+
     private WebElement getTechnologiesInProjectPreview() {
         try {
-            return driver.findElement(CustomBy.xpath("//*[@id=\"myModal-0\"]/div/div/div[2]/div[2]/div/div[2]/div/div[3]/text()[2]"));
+            return driver.findElement(CustomBy.xpath("/html/body/div[1]/div/div[3]/div[2]/div/div[2]/div/span/div/div/div/div[2]/div[2]/div/div[2]/div/div[3]"));
         } catch (Exception e) {
             e.printStackTrace();
             throw new AssertionError("Could not find technologies in project preview");
@@ -112,6 +114,16 @@ public class ProjectsPage extends PageBase {
     public ProjectDetails getProjectCardTitle(String title) {
         ProjectDetails projectDetails = new ProjectDetails();
         projectDetails.setTitle(projectCard(title).getText());
+        return projectDetails;
+    }
+
+    public ProjectDetails getProjectPreview() {
+        ProjectDetails projectDetails = new ProjectDetails();
+        projectDetails.setTitle(projectPreviewTitle().getAttribute("textContent"));
+        projectDetails.setTeam(getTeamInProjectPreview().getAttribute("textContent"));
+        projectDetails.setPerson(getPersonInProjectPreview().getAttribute("textContent"));
+        projectDetails.setSeniority(getSeniorityProjectPreview().getAttribute("textContent").split(":")[1].trim());
+        projectDetails.setTechnology(getTechnologiesInProjectPreview().getAttribute("textContent").split(":")[1].trim());
         return projectDetails;
     }
 

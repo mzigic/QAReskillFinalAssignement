@@ -1,6 +1,7 @@
 package com.projectname.e2e.tests.suites.projects;
 
 import com.projectname.api.client.utils.helpers.RandomDataGenerator;
+import com.projectname.e2e.tests.asserts.ProjectsAssert;
 import com.projectname.e2e.tests.data.model.projects.*;
 import com.projectname.e2e.tests.data.provider.projects.ProjectProvider;
 import com.projectname.e2e.tests.environment.ConfigSetup;
@@ -12,9 +13,6 @@ import com.projectname.e2e.tests.pages.projects.ProjectsPage;
 import com.projectname.e2e.tests.suites.common.TestBase;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.xbill.DNS.Update;
-
-import java.util.Random;
 
 public class ProjectDetailsTests extends TestBase {
     @BeforeClass
@@ -38,32 +36,43 @@ public class ProjectDetailsTests extends TestBase {
         ProjectDetailsPage projectDetailsPage = new ProjectDetailsPage(getDriver(), "", "", "");
 
         UpdateProjectRequest updateProjectRequest = new UpdateProjectRequest();
-        updateProjectRequest.setTitle("updated title");
+        updateProjectRequest.setTitle("edit");
         projectDetailsPage.updateProject(updateProjectRequest);
         ProjectDetails updatedProjectDetails = projectDetailsPage.getActualProjectDetails();
 
-
+        String technologyTitle = "technology " + RandomDataGenerator.createRandomStringAlphabeticWithLen(2);
         CreateTechnologyRequest createTechnologyRequest = new CreateTechnologyRequest();
-        createTechnologyRequest.setTitle("technology " + RandomDataGenerator.createRandomStringAlphabeticWithLen(5));
+        createTechnologyRequest.setTitle(technologyTitle);
         projectDetailsPage.createTechnology(createTechnologyRequest);
 
+        String seniorityTitle = "seniority " + RandomDataGenerator.createRandomStringAlphabeticWithLen(2);
         CreateSeniorityRequest createSeniorityRequest = new CreateSeniorityRequest();
-        createSeniorityRequest.setTitle("seniority " + RandomDataGenerator.createRandomStringAlphabeticWithLen(5));
+        createSeniorityRequest.setTitle(seniorityTitle);
         projectDetailsPage.createSeniority(createSeniorityRequest);
 
+        String teamTitle = "team " + RandomDataGenerator.createRandomStringAlphabeticWithLen(2);
         CreateTeamRequest createTeamRequest = new CreateTeamRequest();
-        createTeamRequest.setTitle("team " + RandomDataGenerator.createRandomStringAlphabeticWithLen(5));
+        createTeamRequest.setTitle(teamTitle);
         projectDetailsPage.createTeam(createTeamRequest);
 
+        String personName = "person " + RandomDataGenerator.createRandomStringAlphabeticWithLen(2);
         CreatePersonRequest createPersonRequest = new CreatePersonRequest();
-        createPersonRequest.setName("person " + RandomDataGenerator.createRandomStringAlphabeticWithLen(5));
+        createPersonRequest.setName(personName);
         projectDetailsPage.createPerson(createPersonRequest);
 
         projectDetailsPage.assignPersonToProject();
 
         projectDetailsPage.navigateBackToProjectsPage();
 
+        ProjectsAssert projectsAssert = new ProjectsAssert();
+        ProjectDetails projectCardTitle = projectsPage.getProjectCardTitle(updatedProjectDetails.getTitle());
+        projectsAssert.assertCreatedProjectCard(projectCardTitle, updatedProjectDetails);
 
+        projectsPage.openProjectPreview();
 
+        ProjectDetails projectDetails = projectsPage.getProjectPreview();
+        projectsAssert.assertProjectPreviewDetails(projectDetails, updatedProjectDetails.getTitle(), teamTitle, personName, seniorityTitle, technologyTitle);
+
+        projectsPage.openProjectDetails(updatedProjectDetails.getTitle());
     }
 }
