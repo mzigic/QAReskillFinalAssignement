@@ -11,6 +11,7 @@ import com.projectname.e2e.tests.pages.projects.CreateProjectPage;
 import com.projectname.e2e.tests.pages.projects.ProjectDetailsPage;
 import com.projectname.e2e.tests.pages.projects.ProjectsPage;
 import com.projectname.e2e.tests.suites.common.TestBase;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -74,5 +75,27 @@ public class ProjectDetailsTests extends TestBase {
         projectsAssert.assertProjectPreviewDetails(projectDetails, updatedProjectDetails.getTitle(), teamTitle, personName, seniorityTitle, technologyTitle);
 
         projectsPage.openProjectDetails(updatedProjectDetails.getTitle());
+    }
+
+    @Test
+    public void verifyCannotUpdateProjectWithoutTitle() {
+        ProjectsPage projectsPage = new ProjectsPage(getDriver(), "", "", "");
+        projectsPage.openCreateProjectPage();
+
+        CreateProjectPage createProjectPage = new CreateProjectPage(getDriver(), "", "", "");
+
+        CreateProjectRequest createProjectRequest = ProjectProvider.prepareCreateProjectRequest();
+        createProjectPage.createNewProject(createProjectRequest);
+
+        ProjectDetailsPage projectDetailsPage = new ProjectDetailsPage(getDriver(), "", "", "");
+
+        UpdateProjectRequest updateProjectRequest = new UpdateProjectRequest();
+        updateProjectRequest.setTitle("");
+        projectDetailsPage.updateProject(updateProjectRequest);
+
+        String expectedMessage = "Title is required";
+        String actualMessage = projectDetailsPage.getTitleErrorMessage();
+
+        Assert.assertEquals(expectedMessage, actualMessage, "Title error message didn't match");
     }
 }

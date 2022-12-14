@@ -6,6 +6,7 @@ import com.projectname.e2e.tests.selectors.CustomBy;
 import com.projectname.e2e.tests.utils.CheckIfElement;
 import com.projectname.e2e.tests.webdriver.CustomWebDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
@@ -282,9 +283,22 @@ public class ProjectDetailsPage extends PageBase {
 
     public ProjectDetailsPage updateProject(UpdateProjectRequest updateProjectRequest) {
         getTitleInputField().click();
-        getTitleInputField().clear();
+        getTitleInputField().sendKeys(Keys.chord(Keys.CONTROL,"a", Keys.DELETE));
         getTitleInputField().sendKeys(updateProjectRequest.getTitle());
         return new ProjectDetailsPage(driver, url, email, password);
+    }
+
+    private WebElement titleErrorMessage() {
+        try {
+            return driver.findElement(CustomBy.id("validation-msg"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new AssertionError("Could not find title error message on create project page");
+        }
+    }
+
+    public String getTitleErrorMessage() {
+        return titleErrorMessage().getText();
     }
 
 }

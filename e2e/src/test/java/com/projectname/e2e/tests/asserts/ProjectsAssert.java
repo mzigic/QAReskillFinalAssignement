@@ -40,5 +40,4 @@ public class ProjectsAssert {
         this.softAssert.assertEquals(projectDetails.getTechnology(), technology, "Technology didn't match");
         this.softAssert.assertAll();
     }
-
 }

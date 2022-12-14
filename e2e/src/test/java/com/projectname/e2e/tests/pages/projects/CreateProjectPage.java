@@ -41,6 +41,19 @@ public class CreateProjectPage extends PageBase {
         }
     }
 
+    private WebElement titleErrorMessage() {
+        try {
+            return driver.findElement(CustomBy.id("validation-msg"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new AssertionError("Could not find title error message on create project page");
+        }
+    }
+
+    public String getTitleErrorMessage() {
+        return titleErrorMessage().getText();
+    }
+
     public ProjectDetailsPage createNewProject(CreateProjectRequest createProjectRequest) {
         getTitleInputField().click();
         getTitleInputField().clear();

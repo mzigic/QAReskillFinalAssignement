@@ -11,6 +11,7 @@ import com.projectname.e2e.tests.pages.projects.CreateProjectPage;
 import com.projectname.e2e.tests.pages.projects.ProjectDetailsPage;
 import com.projectname.e2e.tests.pages.projects.ProjectsPage;
 import com.projectname.e2e.tests.suites.common.TestBase;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -56,5 +57,22 @@ public class ProjectsPageTests extends TestBase {
 //        boolean projectCardExists = projectsPage.projectCardExists(actualProjectDetails.getTitle());
 //
 //        Assert.assertFalse(projectCardExists, "Project is not deleted");
+    }
+
+    @Test
+    public void verifyCannotCreateProjectWithoutTitle() {
+        ProjectsPage projectsPage = new ProjectsPage(getDriver(), "", "", "");
+        projectsPage.openCreateProjectPage();
+
+        CreateProjectPage createProjectPage = new CreateProjectPage(getDriver(), "", "", "");
+
+        CreateProjectRequest createProjectRequest = new CreateProjectRequest();
+        createProjectRequest.setTitle("");
+        createProjectPage.createNewProject(createProjectRequest);
+
+        String expectedMessage = "Title is required";
+        String actualMessage = createProjectPage.getTitleErrorMessage();
+
+        Assert.assertEquals(expectedMessage, actualMessage, "Title error message didn't match");
     }
 }
