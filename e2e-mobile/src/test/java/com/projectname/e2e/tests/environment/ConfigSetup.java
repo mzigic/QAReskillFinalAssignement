@@ -10,8 +10,7 @@ public class ConfigSetup extends ConfigReader{
     }
 
     public static String getBaseURI() {
-        return getValue("BASE_URL");
-
+        return "baseUrl";
     }
 
     public static String getBSUser() {
