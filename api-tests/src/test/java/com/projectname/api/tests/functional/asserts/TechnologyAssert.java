@@ -43,4 +43,17 @@ public class TechnologyAssert {
         softAssert.assertEquals(actualResponse.getTitle(), expectedResponse.getTitle(), "Title didn't match");
         this.softAssert.assertAll();
     }
+
+    public void assertTechnologyNotInList(ListTechnologyResponse[] actualResponse, Integer technologyId) {
+        boolean technologyFound = false;
+        for (ListTechnologyResponse project : actualResponse) {
+            if (Objects.equals(project.getId(), technologyId)) {
+                technologyFound = true;
+                break;
+            }
+        }
+        if (technologyFound) {
+            Assert.fail("Technology not deleted!");
+        }
+    }
 }

@@ -21,4 +21,8 @@ public class PeopleAPI {
         return GsonFunctions.parseSuccessResponseToModel(RestAssuredTokenAuthFunctions.put(updatePerson, token,
                 SandboxApiEndpoints.persons(id)), UpdatePersonResponse[].class);
     }
+
+    public static CreatePersonResponse[] getPersons(String token) {
+        return GsonFunctions.parseSuccessResponseToModel(RestAssuredTokenAuthFunctions.get(token, SandboxApiEndpoints.CANDIDATE_PEOPLE), CreatePersonResponse[].class);
+    }
 }

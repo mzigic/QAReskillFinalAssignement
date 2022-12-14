@@ -34,7 +34,7 @@ import java.util.List;
 
 public class PositiveFunctionalTests extends TestBase {
     @Test(dataProvider = DataProviderNames.VERIFY_CREATE_PROJECT, dataProviderClass = ProjectProvider.class)
-    @Description("Verify can create project")
+    @Description("Verify can create and delete project")
     public static void verifyCreateProjectWithDataProvider(String methodNameSuffix, CreateProjectRequest createProjectRequest) {
 
         CreateProjectResponse createdProjectActual = ProjectsAPI.createProject(token, createProjectRequest);
@@ -48,6 +48,9 @@ public class PositiveFunctionalTests extends TestBase {
         projectAssert.assertProjectInList(projects, createdProjectActual.getId());
 
         ProjectsAPI.deleteProject(token, createdProjectActual.getId());
+        projects = ProjectsAPI.getProjects(token);
+
+        projectAssert.assertProjectNotInList(projects, createdProjectActual.getId());
     }
 
     @Test
@@ -86,7 +89,7 @@ public class PositiveFunctionalTests extends TestBase {
     }
 
     @Test(dataProvider = DataProviderNames.VERIFY_CREATE_TECHNOLOGY, dataProviderClass = TechnologyProvider.class)
-    @Description("Verify can create technology")
+    @Description("Verify can create and delete technology")
     public static void verifyCreateTechnologyWithDataProvider(String methodNameSuffix, CreateTechnologyRequest createTechnologyRequest) {
 
         CreateTechnologyResponse[] createdTechnologyList = TechnologyAPI.createTechnology(token, createTechnologyRequest);
@@ -107,6 +110,9 @@ public class PositiveFunctionalTests extends TestBase {
         technologyAssert.assertTechnologyInList(technologies, createdTechnologyActual.getId());
 
         TechnologyAPI.deleteTechnology(token, createdTechnologyActual.getId());
+        technologies = TechnologyAPI.getTechnologies(token);
+        technologyAssert.assertTechnologyNotInList(technologies, createdTechnologyActual.getId());
+
     }
 
     @Test
@@ -144,7 +150,7 @@ public class PositiveFunctionalTests extends TestBase {
     }
 
     @Test
-    @Description("Verify can create person")
+    @Description("Verify can create and delete person")
     public static void verifyCanCreatePerson() {
         //creating technology
         CreateTechnologyRequest createTechnologyRequest = new CreateTechnologyRequest("Technology1");
@@ -187,11 +193,16 @@ public class PositiveFunctionalTests extends TestBase {
         PersonAssert personAssert = new PersonAssert();
         personAssert.assertCreatedPerson(createdPersonActual, createdPersonExpected);
 
+        //deleting data
         TechnologyAPI.deleteTechnology(token, createTechnologyResponse[0].getId());
         SeniorityAPI.deleteTSeniority(token, createdSeniorityActual.getId());
 
         PeopleAPI.deletePerson(token, createdPersonActual.getId());
         TeamAPI.deleteTeam(token, createdTeamActual.getId());
+
+        CreatePersonResponse[] persons = PeopleAPI.getPersons(token);
+        personAssert.assertPersonNotInList(persons, createdPersonActual.getId());
+
     }
 
     @Test

@@ -58,4 +58,17 @@ public class ProjectAssert {
             Assert.fail("Person not assigned!");
         }
     }
+
+    public void assertProjectNotInList(ListProjectsResponse[] actualResponse, Integer projectId) {
+        boolean projectFound = false;
+        for (ListProjectsResponse project : actualResponse) {
+            if (Objects.equals(project.getId(), projectId)) {
+                projectFound = true;
+                break;
+            }
+        }
+        if (projectFound) {
+            Assert.fail("Project not deleted!");
+        }
+    }
 }

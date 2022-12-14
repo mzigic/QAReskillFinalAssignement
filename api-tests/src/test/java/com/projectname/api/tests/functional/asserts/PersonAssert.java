@@ -5,6 +5,8 @@ import com.projectname.api.client.data.model.people.update.UpdatePersonResponse;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
+import java.util.Objects;
+
 public class PersonAssert {
     private SoftAssert softAssert;
 
@@ -33,5 +35,18 @@ public class PersonAssert {
         softAssert.assertEquals(actualResponse.getSeniority().getId(), expectedResponse.getSeniority().getId(), "Seniority didn't match");
         softAssert.assertEquals(actualResponse.getTechnologies()[0].getId(), expectedResponse.getTechnologies()[0].getId(), "Technologies didn't match");
         this.softAssert.assertAll();
+    }
+
+    public void assertPersonNotInList(CreatePersonResponse[] actualResponse, Integer personId) {
+        boolean personFound = false;
+        for (CreatePersonResponse person : actualResponse) {
+            if (Objects.equals(person.getId(), personId)) {
+                personFound = true;
+                break;
+            }
+        }
+        if (personFound) {
+            Assert.fail("Person not deleted!");
+        }
     }
 }
