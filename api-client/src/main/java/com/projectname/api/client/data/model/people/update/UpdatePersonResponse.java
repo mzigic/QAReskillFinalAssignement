@@ -1,4 +1,4 @@
-package com.projectname.api.client.data.model.people.create;
+package com.projectname.api.client.data.model.people.update;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -8,7 +8,7 @@ import com.projectname.api.client.data.model.technology.create.CreateTechnologyR
 
 import java.io.Serializable;
 
-public class CreatePersonResponse implements Serializable {
+public class UpdatePersonResponse implements Serializable {
 
     @SerializedName("id")
     @Expose
@@ -39,10 +39,10 @@ public class CreatePersonResponse implements Serializable {
     private CreateTechnologyResponse[] technologies = null;
     private final static long serialVersionUID = -4625511916604852520L;
 
-    public CreatePersonResponse() {
+    public UpdatePersonResponse() {
     }
 
-    public CreatePersonResponse(Integer id, String name, Integer candidateId, Integer seniorityId, Integer teamId, Integer candidateScenarioId, CreateSeniorityResponse seniority, CreateTeamResponse team, CreateTechnologyResponse[] technologies) {
+    public UpdatePersonResponse(Integer id, String name, Integer candidateId, Integer seniorityId, Integer teamId, Integer candidateScenarioId, CreateSeniorityResponse seniority, CreateTeamResponse team, CreateTechnologyResponse[] technologies) {
         super();
         this.id = id;
         this.name = name;
@@ -127,12 +127,12 @@ public class CreatePersonResponse implements Serializable {
         this.technologies = technologies;
     }
 
-    public static CreatePersonResponse parseCreatedPerson(CreatePersonRequest createPersonRequest) {
-        CreatePersonResponse createPersonResponse = new CreatePersonResponse();
-        createPersonResponse.setName(createPersonRequest.getName());
-        createPersonResponse.setTechnologies(createPersonRequest.getTechnologies());
-        createPersonResponse.setSeniority(createPersonRequest.getSeniority());
-        createPersonResponse.setTeam(createPersonRequest.getTeam());
-        return createPersonResponse;
+    public static UpdatePersonResponse parseUpdatedPerson(UpdatePersonRequest updatePersonRequest) {
+        UpdatePersonResponse updatePersonResponse = new UpdatePersonResponse();
+        updatePersonResponse.setName(updatePersonRequest.getName());
+        updatePersonResponse.setTechnologies(updatePersonRequest.getTechnologies());
+        updatePersonResponse.setSeniority(updatePersonRequest.getSeniority());
+        updatePersonResponse.setTeam(updatePersonRequest.getTeam());
+        return updatePersonResponse;
     }
 }

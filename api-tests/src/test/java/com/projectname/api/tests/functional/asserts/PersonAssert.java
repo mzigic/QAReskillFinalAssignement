@@ -1,6 +1,7 @@
 package com.projectname.api.tests.functional.asserts;
 
 import com.projectname.api.client.data.model.people.create.CreatePersonResponse;
+import com.projectname.api.client.data.model.people.update.UpdatePersonResponse;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
@@ -15,7 +16,19 @@ public class PersonAssert {
         if (actualResponse == null) {
             Assert.fail("Person was not created");
         }
-        softAssert.assertEquals(actualResponse.getName(), expectedResponse.getName(), "Person didn't match");
+        softAssert.assertEquals(actualResponse.getName(), expectedResponse.getName(), "Person name didn't match");
+        softAssert.assertEquals(actualResponse.getTeam().getId(), expectedResponse.getTeam().getId(), "Team didn't match");
+        softAssert.assertEquals(actualResponse.getSeniority().getId(), expectedResponse.getSeniority().getId(), "Seniority didn't match");
+        softAssert.assertEquals(actualResponse.getTechnologies()[0].getId(), expectedResponse.getTechnologies()[0].getId(), "Technologies didn't match");
+        this.softAssert.assertAll();
+    }
+
+    public void assertUpdatedPerson(UpdatePersonResponse actualResponse, UpdatePersonResponse expectedResponse) {
+        if (actualResponse == null) {
+            Assert.fail("Person was not created");
+        }
+        softAssert.assertEquals(actualResponse.getName(), expectedResponse.getName(), "Person name didn't match");
+        this.softAssert.assertAll();
         softAssert.assertEquals(actualResponse.getTeam().getId(), expectedResponse.getTeam().getId(), "Team didn't match");
         softAssert.assertEquals(actualResponse.getSeniority().getId(), expectedResponse.getSeniority().getId(), "Seniority didn't match");
         softAssert.assertEquals(actualResponse.getTechnologies()[0].getId(), expectedResponse.getTechnologies()[0].getId(), "Technologies didn't match");

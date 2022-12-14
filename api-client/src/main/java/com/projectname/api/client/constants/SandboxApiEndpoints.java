@@ -36,6 +36,10 @@ public class SandboxApiEndpoints {
         return CANDIDATE_TEAMS + id;
     }
 
+    public static final String persons(Integer id) {
+        return CANDIDATE_PEOPLE + id;
+    }
+
     public static String testCaseBy(String id) {
         return CANDIDATE_TESTCASES + id;
     }

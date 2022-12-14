@@ -3,6 +3,8 @@ package com.projectname.api.tests.functional.suites.projects;
 import com.projectname.api.client.calls.*;
 import com.projectname.api.client.data.model.people.create.CreatePersonRequest;
 import com.projectname.api.client.data.model.people.create.CreatePersonResponse;
+import com.projectname.api.client.data.model.people.update.UpdatePersonRequest;
+import com.projectname.api.client.data.model.people.update.UpdatePersonResponse;
 import com.projectname.api.client.data.model.projects.create.CreateProjectRequest;
 import com.projectname.api.client.data.model.projects.create.CreateProjectResponse;
 import com.projectname.api.client.data.model.projects.list.ListProjectsResponse;
@@ -190,5 +192,102 @@ public class PositiveFunctionalTests extends TestBase {
 
         PeopleAPI.deletePerson(token, createdPersonActual.getId());
         TeamAPI.deleteTeam(token, createdTeamActual.getId());
+    }
+
+    @Test
+    @Description("Verify can update person")
+    public static void verifyCanUpdatePerson() {
+        //creating technology
+        CreateTechnologyRequest createTechnologyRequest = new CreateTechnologyRequest("Technology1");
+
+        CreateTechnologyResponse[] createTechnologyResponse = TechnologyAPI.createTechnology(token, createTechnologyRequest);
+        //creating seniority
+        CreateSeniorityRequest createSeniorityRequest = new CreateSeniorityRequest("Seniority1");
+
+        CreateSeniorityResponse[] createSeniorityResponse = SeniorityAPI.createSeniority(token, createSeniorityRequest);
+        CreateSeniorityResponse createdSeniorityActual = null;
+        for (CreateSeniorityResponse seniorityResponse : createSeniorityResponse) {
+            if (seniorityResponse.getTitle().equals(createSeniorityRequest.getTitle())) {
+                createdSeniorityActual = seniorityResponse;
+                break;
+            }
+        }
+        //creating team
+        CreateTeamRequest createTeamRequest = new CreateTeamRequest("Team1");
+
+        CreateTeamResponse[] createTeamResponse = TeamAPI.createTeam(token, createTeamRequest);
+        CreateTeamResponse createdTeamActual = null;
+        for (CreateTeamResponse teamResponse : createTeamResponse) {
+            if (teamResponse.getTitle().equals(createTeamRequest.getTitle())) {
+                createdTeamActual = teamResponse;
+                break;
+            }
+        }
+        //creating person
+        CreatePersonRequest createPersonRequest = new CreatePersonRequest("Person1", createTechnologyResponse, createdSeniorityActual, createdTeamActual);
+        CreatePersonResponse[] createPersonResponse = PeopleAPI.createPerson(token, createPersonRequest);
+        CreatePersonResponse createdPersonActual = null;
+        for (CreatePersonResponse personResponse : createPersonResponse) {
+            if (personResponse.getName().equals(createPersonRequest.getName())) {
+                createdPersonActual = personResponse;
+                break;
+            }
+        }
+        CreatePersonResponse createdPerson = CreatePersonResponse.parseCreatedPerson(createPersonRequest);
+
+        //creating technology 2
+        CreateTechnologyRequest create2ndTechnologyRequest = new CreateTechnologyRequest("Technology2");
+
+        CreateTechnologyResponse[] create2ndTechnologyResponse = TechnologyAPI.createTechnology(token, create2ndTechnologyRequest);
+        //creating seniority 2
+        CreateSeniorityRequest create2ndSeniorityRequest = new CreateSeniorityRequest("Seniority2");
+
+        CreateSeniorityResponse[] create2ndSeniorityResponse = SeniorityAPI.createSeniority(token, create2ndSeniorityRequest);
+        CreateSeniorityResponse created2ndSeniorityActual = null;
+        for (CreateSeniorityResponse seniorityResponse : createSeniorityResponse) {
+            if (seniorityResponse.getTitle().equals(createSeniorityRequest.getTitle())) {
+                created2ndSeniorityActual = seniorityResponse;
+                break;
+            }
+        }
+        //creating team 2
+        CreateTeamRequest create2ndTeamRequest = new CreateTeamRequest("Team2");
+
+        CreateTeamResponse[] create2ndTeamResponse = TeamAPI.createTeam(token, create2ndTeamRequest);
+        CreateTeamResponse created2ndTeamActual = null;
+        for (CreateTeamResponse teamResponse : createTeamResponse) {
+            if (teamResponse.getTitle().equals(createTeamRequest.getTitle())) {
+                created2ndTeamActual = teamResponse;
+                break;
+            }
+        }
+
+        //updating person
+        UpdatePersonRequest updatePersonRequest = new UpdatePersonRequest(
+                createdPerson.getId(), "Person updated", create2ndTechnologyResponse, created2ndSeniorityActual, created2ndTeamActual);
+
+        UpdatePersonResponse[] updatedPersonResponses = PeopleAPI.updatePerson(token, updatePersonRequest, createdPerson.getId());
+        UpdatePersonResponse updatedPersonActual = null;
+        for (UpdatePersonResponse personResponse : updatedPersonResponses) {
+            if (personResponse.getName().equals(updatePersonRequest.getName())) {
+                updatedPersonActual = personResponse;
+                break;
+            }
+        }
+        UpdatePersonResponse updatedPerson = UpdatePersonResponse.parseUpdatedPerson(updatePersonRequest);
+
+        PersonAssert personAssert = new PersonAssert();
+        personAssert.assertUpdatedPerson(updatedPersonActual, updatedPerson);
+
+        //deleting created data
+        TechnologyAPI.deleteTechnology(token, createTechnologyResponse[0].getId());
+        TechnologyAPI.deleteTechnology(token, create2ndTechnologyResponse[0].getId());
+        SeniorityAPI.deleteTSeniority(token, createdSeniorityActual.getId());
+        SeniorityAPI.deleteTSeniority(token, created2ndSeniorityActual.getId());
+
+        PeopleAPI.deletePerson(token, createdPersonActual.getId());
+        PeopleAPI.deletePerson(token, updatedPersonActual.getId());
+        TeamAPI.deleteTeam(token, createdTeamActual.getId());
+        TeamAPI.deleteTeam(token, created2ndTeamActual.getId());
     }
 }
