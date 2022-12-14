@@ -1,6 +1,7 @@
 package com.projectname.e2e.tests.pages.projects;
 
 import com.projectname.e2e.tests.data.model.projects.CreateProjectRequest;
+import com.projectname.e2e.tests.data.model.projects.UpdateProjectRequest;
 import com.projectname.e2e.tests.pages.common.PageBase;
 import com.projectname.e2e.tests.selectors.CustomBy;
 import com.projectname.e2e.tests.utils.CheckIfElement;
@@ -49,4 +50,6 @@ public class CreateProjectPage extends PageBase {
 
         return new ProjectDetailsPage(driver, url, email, password);
     }
+
+
 }

@@ -7,6 +7,7 @@ import com.projectname.e2e.tests.selectors.CustomBy;
 import com.projectname.e2e.tests.utils.CheckIfElement;
 import com.projectname.e2e.tests.webdriver.CustomWebDriver;
 import org.openqa.selenium.WebElement;
+import org.testng.asserts.Assertion;
 
 public class ProjectsPage extends PageBase {
     public ProjectsPage(CustomWebDriver driver, String url, String email, String password) {
@@ -53,6 +54,61 @@ public class ProjectsPage extends PageBase {
         }
     }
 
+    private WebElement getPreviewBtn() {
+        try {
+            return driver.findElement(CustomBy.xpath("/html/body/div/div/div[3]/div[2]/div/div[2]/div/span/a/div/div[2]/div[5]/div/div[1]"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new AssertionError("Could not find preview button on projects page");
+        }
+    }
+
+    private WebElement projectPreviewTitle() {
+        try {
+            return driver.findElement(CustomBy.xpath("//*[@id=\"myModal-0\"]/div/div/div[2]/div[1]/div[2]"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new AssertionError("Could not find project preview title");
+        }
+    }
+
+    private WebElement getTeamInProjectPreview() {
+        try {
+            return driver.findElement(CustomBy.xpath("//*[@id=\"myModal-0\"]/div/div/div[2]/div[2]/div/div[1]"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new AssertionError("Could not find team in project preview");
+        }
+    }
+    private WebElement getPersonInProjectPreview() {
+        try {
+            return driver.findElement(CustomBy.xpath("//*[@id=\"myModal-0\"]/div/div/div[2]/div[2]/div/div[2]/div/div[1]"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new AssertionError("Could not find person in project preview");
+        }
+    }
+    private WebElement getSeniorityProjectPreview() {
+        try {
+            return driver.findElement(CustomBy.xpath("//*[@id=\"myModal-0\"]/div/div/div[2]/div[2]/div/div[2]/div/div[2]"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new AssertionError("Could not find seniority in project preview");
+        }
+    }
+    private WebElement getTechnologiesInProjectPreview() {
+        try {
+            return driver.findElement(CustomBy.xpath("//*[@id=\"myModal-0\"]/div/div/div[2]/div[2]/div/div[2]/div/div[3]/text()[2]"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new AssertionError("Could not find technologies in project preview");
+        }
+    }
+
+    public void openProjectPreview() {
+        getPreviewBtn().click();
+    }
+
     public ProjectDetails getProjectCardTitle(String title) {
         ProjectDetails projectDetails = new ProjectDetails();
         projectDetails.setTitle(projectCard(title).getText());
@@ -63,6 +119,7 @@ public class ProjectsPage extends PageBase {
         projectCard(title).click();
         return new ProjectDetailsPage(driver, url, email, password);
     }
+
     public boolean projectCardExists(String title) {
         try {
             projectCard(title);

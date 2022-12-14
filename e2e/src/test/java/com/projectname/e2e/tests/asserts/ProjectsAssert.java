@@ -21,7 +21,7 @@ public class ProjectsAssert {
     }
 
     public void assertCreatedProjectCard(ProjectDetails actualDetails, ProjectDetails expectedDetails) {
-        if(actualDetails == null) {
+        if (actualDetails == null) {
             Assert.fail("Actual details are null");
         }
 
