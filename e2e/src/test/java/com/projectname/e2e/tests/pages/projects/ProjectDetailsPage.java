@@ -1,5 +1,6 @@
 package com.projectname.e2e.tests.pages.projects;
 
+import com.projectname.e2e.tests.data.model.projects.ProjectDetails;
 import com.projectname.e2e.tests.pages.common.PageBase;
 import com.projectname.e2e.tests.selectors.CustomBy;
 import com.projectname.e2e.tests.utils.CheckIfElement;
@@ -23,10 +24,17 @@ public class ProjectDetailsPage extends PageBase {
 
     private WebElement getTitleInputField() {
         try {
-            return driver.findElement(CustomBy.xpath("//*[@id=\"root\"]/div/div[3]/div[2]/div/div[2]/div[1]/div[1]/div[2]/div/div/div[2]/input"));
+            return driver.findElement(CustomBy.name("title"));
         } catch (Exception e) {
             e.printStackTrace();
             throw new AssertionError("Could not title input field on project details page");
         }
+    }
+
+    public ProjectDetails getActualProjectDetails() {
+        ProjectDetails projectDetails = new ProjectDetails();
+
+        projectDetails.setTitle(getTitleInputField().getAttribute("value"));
+        return projectDetails;
     }
 }

@@ -33,7 +33,7 @@ public class DashboardPage extends PageBase {
 
     @Override
     public boolean isDisplayed() {
-        return CheckIfElement.isDisplayed(CustomBy.testAutomationId("dashboardButton"), driver);
+        return CheckIfElement.isDisplayed(CustomBy.xpath("//*[@id=\"root\"]/div/div[3]/div[2]/div/div/div[1]/div/div[1]/div"), driver);
     }
 
     private WebElement getPlaygroundBtn() {
