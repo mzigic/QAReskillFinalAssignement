@@ -42,5 +42,19 @@ public class ProjectsPageTests extends TestBase {
         ProjectsAssert projectsAssert = new ProjectsAssert();
 
         projectsAssert.assertProjectCreated(actualProjectDetails, expectedProjectDetails);
+
+        projectDetailsPage.navigateBackToProjectsPage();
+
+        ProjectDetails projectCardTitle = projectsPage.getProjectCardTitle(actualProjectDetails.getTitle());
+        projectsAssert.assertCreatedProjectCard(projectCardTitle, expectedProjectDetails);
+
+        projectsPage.openProjectDetails(actualProjectDetails.getTitle());
+        projectDetailsPage.removeProject();
+        projectDetailsPage.confirmRemoveProject();
+
+//      need to figure out how to assert if element doesn't exist
+//        boolean projectCardExists = projectsPage.projectCardExists(actualProjectDetails.getTitle());
+//
+//        Assert.assertFalse(projectCardExists, "Project is not deleted");
     }
 }

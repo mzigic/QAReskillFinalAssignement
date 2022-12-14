@@ -19,4 +19,15 @@ public class ProjectsAssert {
         this.softAssert.assertEquals(actualDetails.getTitle(), expectedDetails.getTitle());
         this.softAssert.assertAll();
     }
+
+    public void assertCreatedProjectCard(ProjectDetails actualDetails, ProjectDetails expectedDetails) {
+        if(actualDetails == null) {
+            Assert.fail("Actual details are null");
+        }
+
+        this.softAssert.assertEquals(actualDetails.getTitle(), expectedDetails.getTitle());
+        this.softAssert.assertAll();
+    }
+
+
 }
