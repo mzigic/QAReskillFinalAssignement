@@ -33,22 +33,36 @@ import org.testng.annotations.Test;
 import java.util.List;
 
 public class PositiveFunctionalTests extends TestBase {
+    static ProjectAssert projectAssert = new ProjectAssert();
+    static PersonAssert personAssert = new PersonAssert();
+
     @Test(dataProvider = DataProviderNames.VERIFY_CREATE_PROJECT, dataProviderClass = ProjectProvider.class)
-    @Description("Verify can create and delete project")
+    @Description("Verify can create project")
     public static void verifyCreateProjectWithDataProvider(String methodNameSuffix, CreateProjectRequest createProjectRequest) {
 
         CreateProjectResponse createdProjectActual = ProjectsAPI.createProject(token, createProjectRequest);
 
         CreateProjectResponse createdProjectExpected = CreateProjectResponse.parseCreatedProject(createProjectRequest);
 
-        ProjectAssert projectAssert = new ProjectAssert();
         projectAssert.assertCreatedProject(createdProjectActual, createdProjectExpected);
 
         ListProjectsResponse[] projects = ProjectsAPI.getProjects(token);
         projectAssert.assertProjectInList(projects, createdProjectActual.getId());
 
-        ProjectsAPI.deleteProject(token, createdProjectActual.getId());
-        projects = ProjectsAPI.getProjects(token);
+        Integer projectId = createdProjectActual.getId();
+        ProjectsAPI.deleteProject(token, projectId);
+    }
+
+    @Test(dataProvider = DataProviderNames.VERIFY_CREATE_PROJECT, dataProviderClass = ProjectProvider.class)
+    @Description("Verify can delete project")
+    public static void verifyDeleteProjectWithDataProvider(String methodNameSuffix, CreateProjectRequest createProjectRequest) {
+
+        CreateProjectResponse createdProjectActual = ProjectsAPI.createProject(token, createProjectRequest);
+
+        Integer projectId = createdProjectActual.getId();
+        ProjectsAPI.deleteProject(token, projectId);
+
+        ListProjectsResponse[] projects = ProjectsAPI.getProjects(token);
 
         projectAssert.assertProjectNotInList(projects, createdProjectActual.getId());
     }
@@ -78,8 +92,6 @@ public class PositiveFunctionalTests extends TestBase {
         UpdateProjectResponse updatedProjectActual = ProjectsAPI.updateProject(token, updateProjectRequest, createdProjectActual.getId());
 
         UpdateProjectResponse updatedProjectExpected = UpdateProjectResponse.parseUpdatedProject(updateProjectRequest);
-
-        ProjectAssert projectAssert = new ProjectAssert();
 
         projectAssert.assertUpdatedProjectTitle(updatedProjectActual, updatedProjectExpected);
         projectAssert.assertPersonAssigned(updatedProjectActual, person.getId());
@@ -112,7 +124,6 @@ public class PositiveFunctionalTests extends TestBase {
         TechnologyAPI.deleteTechnology(token, createdTechnologyActual.getId());
         technologies = TechnologyAPI.getTechnologies(token);
         technologyAssert.assertTechnologyNotInList(technologies, createdTechnologyActual.getId());
-
     }
 
     @Test
@@ -190,7 +201,6 @@ public class PositiveFunctionalTests extends TestBase {
         }
         CreatePersonResponse createdPersonExpected = CreatePersonResponse.parseCreatedPerson(createPersonRequest);
 
-        PersonAssert personAssert = new PersonAssert();
         personAssert.assertCreatedPerson(createdPersonActual, createdPersonExpected);
 
         //deleting data
@@ -286,8 +296,6 @@ public class PositiveFunctionalTests extends TestBase {
             }
         }
         UpdatePersonResponse updatedPerson = UpdatePersonResponse.parseUpdatedPerson(updatePersonRequest);
-
-        PersonAssert personAssert = new PersonAssert();
         personAssert.assertUpdatedPerson(updatedPersonActual, updatedPerson);
 
         //deleting created data

@@ -26,6 +26,13 @@ public class ProjectAssert {
     }
 
     public void assertProjectInList(ListProjectsResponse[] actualResponse, Integer projectId) {
+        boolean projectFound = isProjectInList(actualResponse, projectId);
+        if (!projectFound) {
+            Assert.fail("Project not created!");
+        }
+    }
+
+    private Boolean isProjectInList(ListProjectsResponse[] actualResponse, Integer projectId) {
         boolean projectFound = false;
         for (ListProjectsResponse project : actualResponse) {
             if (Objects.equals(project.getId(), projectId)) {
@@ -33,9 +40,7 @@ public class ProjectAssert {
                 break;
             }
         }
-        if (!projectFound) {
-            Assert.fail("Project not created!");
-        }
+        return projectFound;
     }
 
     public void assertUpdatedProjectTitle(UpdateProjectResponse actualResponse, UpdateProjectResponse expectedResponse) {
@@ -60,13 +65,7 @@ public class ProjectAssert {
     }
 
     public void assertProjectNotInList(ListProjectsResponse[] actualResponse, Integer projectId) {
-        boolean projectFound = false;
-        for (ListProjectsResponse project : actualResponse) {
-            if (Objects.equals(project.getId(), projectId)) {
-                projectFound = true;
-                break;
-            }
-        }
+        boolean projectFound = isProjectInList(actualResponse, projectId);
         if (projectFound) {
             Assert.fail("Project not deleted!");
         }
