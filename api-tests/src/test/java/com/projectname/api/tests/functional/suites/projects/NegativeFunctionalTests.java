@@ -14,13 +14,15 @@ import com.projectname.api.tests.init.TestBase;
 import org.testng.annotations.Test;
 
 public class NegativeFunctionalTests extends TestBase {
+    CommonErrorAssert commonErrorAssert = new CommonErrorAssert();
+
     @Test(dataProvider = DataProviderNames.VERIFY_CANNOT_CREATE_PROJECT_WITHOUT_REQUIRED_FIELD,
             dataProviderClass = ProjectProvider.class)
     public void verifyCannotCreateProjectWithoutRequiredField(
             String suffix, CreateProjectRequest projectRequest, ProjectRequiredFieldErrorResponse expectedError) {
         ProjectRequiredFieldErrorResponse actualError = ProjectsAPI.
                 createProjectTitleError(token, projectRequest);
-        CommonErrorAssert commonErrorAssert = new CommonErrorAssert();
+
         commonErrorAssert.assertProjectTitleError(actualError, expectedError);
     }
 
@@ -31,7 +33,6 @@ public class NegativeFunctionalTests extends TestBase {
         ProjectRequiredFieldErrorResponse actualError = ProjectsAPI.
                 createProjectTitleError(token, createProjectRequest);
 
-        CommonErrorAssert commonErrorAssert = new CommonErrorAssert();
         ProjectRequiredFieldErrorResponse expectedError = new ProjectRequiredFieldErrorResponse(ErrorMessages.PROJECT_TITLE_ALREADY_EXISTS);
         commonErrorAssert.assertProjectTitleError(actualError, expectedError);
 
@@ -45,9 +46,7 @@ public class NegativeFunctionalTests extends TestBase {
         CreateProjectResponse createdProject = ProjectsAPI.createProject(token, createProjectRequest);
 
         ProjectRequiredFieldErrorResponse actualError = ProjectsAPI.updateProjectTitleError(token, updateRequest, createdProject.getId());
-
-        CommonErrorAssert commonErrorAssert = new CommonErrorAssert();
-
+        
         commonErrorAssert.assertProjectTitleError(actualError, expectedError);
 
         ProjectsAPI.deleteProject(token, createdProject.getId());
