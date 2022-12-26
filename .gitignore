@@ -282,3 +282,4 @@ htec-ga-java-template.iml
 /performance/performance.iml
 /e2e-mobile/e2e-mobile.iml
 api-tests/src/test/resources/env-api.properties
+e2e/src/test/resources/env-e2e.properties

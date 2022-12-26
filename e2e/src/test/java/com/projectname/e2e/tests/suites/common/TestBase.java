@@ -66,7 +66,7 @@ public class TestBase implements ITest, IInvokedMethodListener {
 
         mapWebDriver.put(context.getCurrentXmlTest().getName(), this.driver);
 
-        getDriver().get(baseUrl);
+        getDriver().get(baseUrl+"login");
         getDriver().manage().window().maximize();
         getDriver().addMouseFollowOnClick();
     }
